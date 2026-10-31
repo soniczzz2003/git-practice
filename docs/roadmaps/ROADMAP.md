@@ -1,0 +1,213 @@
+# Lab 45
+
+> Levels: L1 = enough to apply for junior / DevOps-support roles. L2 = mid-level (the "3+ years" postings). L3 = senior (needs production experience, study alone is not enough).
+> Time estimates assume about 10 hours/week per person and are my guesses. Double your hours and the calendar time shrinks, though not perfectly.
+> "Done when" = the check you pass before ticking the box. "Project" = what you ship before leaving the section.
+
+- [ ] 00. Home Lab & Offline Toolkit (weeks 1-2, do this first)
+  - [ ] Hardware: one machine, 8+ cores, 32 GB RAM (16 GB bare minimum), 500 GB+ SSD, virtualization enabled in BIOS. Done when: nested virtualization works.
+  - [ ] Hypervisor: Proxmox, or KVM/libvirt on Ubuntu. Done when: you can create, snapshot, clone and destroy a VM from both CLI and web UI.
+  - [ ] Base VM template (Ubuntu LTS, cloud-init, SSH keys only). Done when: a cloned VM is reachable by SSH within 2 minutes.
+  - [ ] Group access via WireGuard to one shared lab host. Done when: every member can SSH into a lab VM from home.
+  - [ ] Offline toolkit: local apt mirror/cache, pull-through registry or Harbor proxy, Nexus for pip/npm/Maven, archive of ISOs, packages and Helm charts. Done when: a lab VM with no direct internet can still install packages and pull images through your own mirrors.
+  - [ ] Offline documentation (man pages, tldr, kubectl explain, offline docsets). Done when: you can look up syntax with the internet off.
+  - [ ] Project: the whole lab is documented in a repo and can be rebuilt from scratch.
+
+## LEVEL 1: Junior-hireable (weeks 3-36, about 8 months)
+
+- [ ] 01. Git [L1, week 3]
+  - [ ] Core commands (init, add, commit, push, pull). Done when: you can do a full cycle without notes.
+  - [ ] Branching, merging, conflict resolution. Done when: you resolve a real conflict in a teammate's repo.
+  - [ ] Rebase. Done when: you squash 5 commits with interactive rebase.
+  - [ ] Merge request / code review workflow (GitLab-style). Done when: you opened and reviewed an MR with comments.
+  - [ ] .gitignore & Markdown. Done when: your READMEs render cleanly.
+  - [ ] Project: team notes repo with protected main and MR-only changes.
+- [ ] 02. Linux (LPIC roadmap) [L1, weeks 4-9]
+  - [ ] Filesystem, permissions, ACLs, umask. Done when: you can fix permission problems without trial and error.
+  - [ ] Users, groups, sudo. Done when: you can create a restricted admin user from scratch.
+  - [ ] Processes & signals. Done when: you can find and stop a runaway process and explain load average.
+  - [ ] Package management (apt, dnf) + local repos/mirrors. Done when: you built and used a local mirror.
+  - [ ] systemd & services. Done when: you wrote a unit file with restart policy and read its journal.
+  - [ ] Cron & timers. Done when: a systemd timer runs a job and logs its output.
+  - [ ] Disk, LVM & mounts. Done when: you extend an LVM volume online and recover from a broken fstab.
+  - [ ] Performance tuning & patching. Done when: you diagnose high CPU, memory or IO with top/vmstat/iostat.
+  - [ ] Ubuntu/Debian first, then Rocky/Alma. Done when: the same task works on both families.
+  - [ ] YAML / JSON / TOML (jq, yq). Done when: you can validate and transform all three.
+  - [ ] SSH & keys. Done when: key-only login, ssh config, jump host and port forwarding all work.
+  - [ ] Project: harden and document a fresh server (users, SSH, firewall, unattended updates).
+- [ ] 03. Network (Network+ roadmap) [L1, weeks 10-14]
+  - [ ] OSI & TCP/IP. Done when: you can explain what happens from typing a URL to the page loading.
+  - [ ] IP addressing & subnetting. Done when: you split a /24 into 4 subnets by hand in 5 minutes.
+  - [ ] DNS (BIND or CoreDNS). Done when: you run an internal zone and debug it with dig.
+  - [ ] HTTP / HTTPS. Done when: you read curl -v output and know the common status codes.
+  - [ ] TLS & certificates with an internal CA. Done when: you issue a cert from your own CA and a client trusts it.
+  - [ ] DHCP, NAT, routing, VLANs. Done when: a router VM connects two subnets with NAT.
+  - [ ] Firewalls (nftables, iptables, ufw). Done when: you have a default-deny ruleset with logging.
+  - [ ] VPN (WireGuard, OpenVPN). Done when: a site-to-site or client tunnel works.
+  - [ ] Troubleshooting (ping, traceroute, curl, dig, ss, tcpdump). Done when: you isolate DNS vs routing vs firewall vs app in a "site is down" drill.
+  - [ ] Cisco IOS & GNS3 basics (optional, one posting asked for it)
+  - [ ] Project: two-subnet network with router, DHCP, internal DNS, firewall and WireGuard, with a diagram.
+- [ ] 04. Bash (shell scripting) [L1, weeks 15-16]
+  - [ ] Variables, conditionals, loops, functions. Done when: scripts take arguments and validate them.
+  - [ ] Pipes, redirection, text processing (grep, sed, awk, jq). Done when: you extract the top 10 IPs from a large log.
+  - [ ] Error handling & best practices (set -euo pipefail, trap, shellcheck). Done when: shellcheck reports zero warnings.
+  - [ ] Project: backup script with rotation, logging and exit codes, run by a systemd timer.
+- [ ] 05. Python basics [L1, weeks 17-19]
+  - [ ] Syntax, data structures, files, modules. Done when: you can write a 100-line script without copy-pasting.
+  - [ ] Automation (requests, subprocess, argparse). Done when: you built a CLI that calls an API and prints a report.
+  - [ ] Project: health-check script for N servers that sends results to a chat webhook.
+- [ ] 06. Docker [L1, weeks 20-23]
+  - [ ] Images, containers, Dockerfile. Done when: you containerize an app you didn't write.
+  - [ ] Volumes & networking. Done when: data survives a container rebuild.
+  - [ ] Docker Compose. Done when: a multi-service stack starts with one command.
+  - [ ] Multi-stage builds & image best practices. Done when: image is small, non-root, with a .dockerignore.
+  - [ ] Private registry (Registry, Harbor, GitLab Registry). Done when: push/pull works with auth and TLS.
+  - [ ] Docker Hub is blocked: pull-through mirrors, skopeo/crane, docker save/load. Done when: you move an image to an isolated host in three different ways.
+  - [ ] Image scanning (Trivy). Done when: a scan fails a build on high-severity findings.
+  - [ ] Project: 3-tier app (web, API, DB) in Compose with images from your own registry.
+- [ ] 07. Reverse Proxy & TLS [L1, weeks 24-26]
+  - [ ] Reverse vs forward proxy. Done when: you can explain both with a diagram.
+  - [ ] Nginx. Done when: vhosts, TLS, rate limiting, upstreams and logs are configured.
+  - [ ] HAProxy. Done when: an L7 load balancer with health checks and stats page works.
+  - [ ] TLS termination (public ACME where reachable, internal CA otherwise). Done when: certificates renew automatically.
+  - [ ] Load balancing algorithms & health checks. Done when: you can explain and test round-robin vs least-conn.
+  - [ ] Project: put the Docker 3-tier app behind HAProxy + Nginx with TLS and 2 replicas, and survive killing one.
+- [ ] 08. CI/CD [L1, weeks 27-30]
+  - [ ] Pipeline concepts (build, test, deploy). Done when: you can draw a pipeline for any app.
+  - [ ] Self-hosted GitLab CE + Runner (Docker executor). Done when: a merge triggers build, test, image push and deploy to a lab VM.
+  - [ ] GitLab CI depth (rules, artifacts, cache, environments, protected variables, templates). Done when: no copy-pasted jobs remain.
+  - [ ] Project: pipeline that builds, scans with Trivy, pushes to your registry, deploys, and rolls back on failure.
+- [ ] 09. Monitoring Basics [L1, weeks 31-33]
+  - [ ] Prometheus, node_exporter, PromQL basics. Done when: you query CPU, memory and disk per host.
+  - [ ] Grafana dashboards. Done when: a dashboard shows the lab's health at a glance.
+  - [ ] Zabbix. Done when: host, template, trigger and alert all work.
+  - [ ] Logging basics (journald, rsyslog, logrotate, structured logs). Done when: logs rotate and ship to one place.
+  - [ ] Project: dashboard plus 3 alerts (disk over 85%, service down, high latency) on the lab.
+- [ ] 10. Virtualization & Hardware [L1, weeks 34-36]
+  - [ ] VMware vSphere/ESXi concepts (snapshots, HA, vMotion, resource pools). Done when: you can explain each; hands-on if you can get a host, otherwise practice the equivalents in Proxmox.
+  - [ ] Proxmox/KVM: clustering, storage, live migration, backups. Done when: you live-migrate a VM between nodes.
+  - [ ] Storage basics (NFS, iSCSI, RAID, Ceph overview). Done when: a VM runs from shared storage.
+  - [ ] Hardware basics (IPMI/iDRAC, RAID, datacenter basics). Done when: you can read a server spec sheet and explain it.
+  - [ ] Project: 2-node nested Proxmox cluster with shared storage, one live migration and one restore from backup.
+- [ ] L1 Checkpoint (week 36)
+  - [ ] Portfolio repo contains all L1 projects with README and diagram
+  - [ ] 2 mock interviews per person (Linux, networking, "site is down" scenario)
+  - [ ] Start applying for junior, support and intern roles while continuing L2
+
+## LEVEL 2: Mid-level (weeks 37-80, about 10 more months)
+
+- [ ] 11. Automation [L2, weeks 37-42]
+  - [ ] Ansible (inventory, playbooks, roles, handlers, Jinja2 templates). Done when: a role configures a server from blank.
+  - [ ] Idempotency & check mode. Done when: a second run reports 0 changed.
+  - [ ] Ansible Vault. Done when: secrets are encrypted in the repo.
+  - [ ] Intermediate Python (pytest, packaging, logging, API clients). Done when: your CLI has tests.
+  - [ ] Project: roles that turn a blank VM into a hardened web server with Nginx and node_exporter.
+- [ ] 12. Kubernetes on-prem [L2, weeks 43-52]
+  - [ ] Docker Swarm basics (seen in 2 postings). Done when: a 3-node Swarm runs a replicated service with a rolling update.
+  - [ ] Architecture & core objects (Pod, Deployment, Service). Done when: you can explain every component in a running cluster.
+  - [ ] Bootstrapping (kubeadm, then Kubespray). Done when: Kubespray builds the same cluster from a playbook.
+  - [ ] Running without public registries (containerd mirrors, private registry pull secrets, mirrored registry.k8s.io images). Done when: cluster nodes have no direct internet and everything still starts.
+  - [ ] CNI (Calico, Cilium) & NetworkPolicy. Done when: a policy blocks traffic between namespaces and you prove it.
+  - [ ] ConfigMaps & Secrets. Done when: config changes without rebuilding images.
+  - [ ] Ingress (Nginx Ingress) + MetalLB. Done when: services get external IPs and TLS on bare metal.
+  - [ ] Persistent volumes & StatefulSets (Longhorn, Rook-Ceph or NFS). Done when: a database pod survives rescheduling with data intact.
+  - [ ] RBAC & namespaces. Done when: a user can only touch their own namespace.
+  - [ ] Probes, limits, autoscaling (HPA). Done when: load test scales pods up and back down.
+  - [ ] Cluster operations (upgrades, etcd backup/restore, drain). Done when: you restore a cluster from an etcd snapshot.
+  - [ ] Kubernetes troubleshooting. Done when: you fix CrashLoopBackOff, ImagePullBackOff, Pending and DNS failures in under 10 minutes each.
+  - [ ] Project: the 3-tier app on your cluster with Ingress + TLS, persistent DB, HPA, NetworkPolicies, and a surviving node drain.
+- [ ] 13. Helm, Kustomize & GitOps [L2, weeks 53-56]
+  - [ ] Helm (writing your own chart, using mirrored charts/images). Done when: you install a mirrored third-party chart offline.
+  - [ ] Kustomize overlays. Done when: dev and staging differ only by overlay.
+  - [ ] Git internals. Done when: you can explain objects, refs and the reflog.
+  - [ ] Argo CD. Done when: apps auto-sync from Git, self-heal, and roll back by reverting a commit.
+  - [ ] Flux (compare only)
+  - [ ] Project: Argo CD deploys dev/staging overlays from GitLab, and your pipeline updates the image tag.
+- [ ] 14. IaC [L2, weeks 57-60]
+  - [ ] Terraform: providers, resources, variables, outputs. Done when: you create and destroy lab VMs from code.
+  - [ ] State & remote backends (GitLab-managed state or MinIO S3). Done when: two people can safely apply in turn.
+  - [ ] Modules. Done when: one module is reused for 3 different VMs.
+  - [ ] Offline provider/binary mirrors (CLI config filesystem or network mirror). Done when: `init` works on a host with no registry access.
+  - [ ] OpenTofu. Done when: the same config applies under both.
+  - [ ] Practice targets: Proxmox or vSphere provider, plus Hetzner or an Iranian cloud if you can access one.
+  - [ ] Project: one command builds the VMs, Ansible configures them, Kubespray installs Kubernetes.
+- [ ] 15. Observability Depth [L2, weeks 61-65]
+  - [ ] ELK / Elasticsearch operations (index lifecycle, shard sizing). Done when: logs from all lab hosts are searchable centrally.
+  - [ ] Loki (compare only)
+  - [ ] Alertmanager (routing, silences, inhibition). Done when: alerts reach the right person with the right severity.
+  - [ ] Sentry (self-hosted). Done when: app exceptions show up with stack traces.
+  - [ ] Custom exporters. Done when: you expose a metric from your own script.
+  - [ ] SLI / SLO / error budgets. Done when: you defined an SLO and a dashboard for it.
+  - [ ] On-call practice (runbooks, escalation, postmortems). Done when: you run a game day and write the postmortem.
+  - [ ] Project: central logging, metrics and alerts for the Kubernetes lab, with an SLO dashboard.
+- [ ] 16. Databases & Queues (operate them, not just use them) [L2, weeks 66-73]
+  - [ ] SQL basics. Done when: joins, indexes and EXPLAIN make sense to you.
+  - [ ] PostgreSQL (backups, WAL, streaming replication, tuning). Done when: you restore to a point in time.
+  - [ ] MySQL / MariaDB / Galera. Done when: a Galera cluster survives a node loss.
+  - [ ] Redis (persistence, Sentinel/Cluster). Done when: failover works under a kill test.
+  - [ ] MongoDB replica set. Done when: a primary election happens and the app recovers.
+  - [ ] Elasticsearch cluster basics. Done when: you can read cluster health and fix yellow/red states.
+  - [ ] RabbitMQ (clustering, queues, monitoring). Done when: a queue survives a node restart without message loss.
+  - [ ] Kafka (L3, optional), InfluxDB (L3, optional)
+  - [ ] Project: HA Postgres with a failover test and a point-in-time restore, fully monitored.
+- [ ] 17. Security [L2, weeks 74-77]
+  - [ ] Linux hardening (CIS-style, Lynis). Done when: every lab VM scores above your agreed baseline.
+  - [ ] Firewall policy & segmentation. Done when: each tier only talks to what it must.
+  - [ ] Container security (non-root, read-only FS, seccomp, Trivy gate in CI). Done when: the gate blocks a vulnerable image.
+  - [ ] Secrets management (SOPS, Sealed Secrets; Vault is L3). Done when: no plaintext secrets exist in any repo.
+  - [ ] IAM on-prem (LDAP, FreeIPA, Keycloak). Done when: GitLab and Grafana log in through one SSO.
+  - [ ] PKI deep dive (internal CA, rotation). Done when: you rotate an expiring cert without downtime.
+  - [ ] Supply chain (SBOM, image signing). Done when: pipeline produces an SBOM and signs images.
+  - [ ] Project: security review of the whole lab with a written findings list and fixes.
+- [ ] 18. Backup & Disaster Recovery [L2, weeks 78-80]
+  - [ ] Backup strategies (3-2-1, Borg/Restic, Velero, DB dumps). Done when: every stateful component has a tested restore.
+  - [ ] RPO / RTO & DR planning. Done when: you have a written plan with measured numbers.
+  - [ ] Project: destroy the Kubernetes lab and rebuild it from Git + backups, recording the RTO.
+- [ ] L2 Checkpoint (week 80)
+  - [ ] Portfolio has all L2 projects, each with a short English write-up
+  - [ ] Mock interviews on Kubernetes troubleshooting, CI/CD design and "design an on-prem platform"
+  - [ ] Apply for mid-level roles (the "3+ years" postings), using the lab as your evidence
+
+## LEVEL 3: Senior (open-ended, learn by doing the job)
+
+- [ ] 19. Architecture & Design Patterns [L3]
+  - [ ] Monolith vs microservices, 12-factor, caching, HA. Done when: you can critique a real system's design.
+  - [ ] CAP theorem & distributed systems basics. Done when: you can explain consistency trade-offs in your own DB setups.
+  - [ ] Capacity planning. Done when: you forecast resource needs from real metrics.
+- [ ] 20. SRE Practice [L3]
+  - [ ] Error budgets, incident command, toil reduction. Done when: you led a real or simulated incident end to end.
+  - [ ] Chaos engineering (optional). Done when: you break something on purpose and prove recovery.
+- [ ] 21. Advanced Platform [L3]
+  - [ ] Cilium / eBPF deep dive
+  - [ ] Service mesh (Istio, Linkerd)
+  - [ ] Vault & Kubernetes integration
+  - [ ] Multi-cluster and Traefik (optional)
+  - [ ] Crossplane, Pulumi (optional)
+- [ ] 22. Cloud Concepts [L3, reading-level, provider-neutral]
+  - [ ] Compute, network, storage, IAM, load balancing, VPC, managed Kubernetes. Done when: you can map each concept to your on-prem equivalent.
+  - [ ] Hands-on with Hetzner or an Iranian cloud provider if accessible
+  - [ ] AWS/Azure/GCP terminology (foreign employers expect it)
+  - [ ] Cost management basics
+- [ ] 23. Advanced Python & Mentoring [L3]
+  - [ ] Advanced Python (concurrency, packaging, testing at scale)
+  - [ ] Teach: review MRs, write runbooks, lead a postmortem
+
+## Stay Employable (run alongside everything)
+
+- [ ] Block-resilient workflow
+  - [ ] Pin every version and vendor your dependencies. Done when: a project builds from your mirrors alone.
+  - [ ] Keep local copies of installers, charts and images you depend on
+  - [ ] Test every new tool's download path before planning a lab around it
+- [ ] Transferable skills
+  - [ ] Learn concepts first, tools second. Done when: you can name two alternatives for every tool you know.
+  - [ ] Write READMEs and write-ups in English
+  - [ ] Keep your portfolio in more than one place
+  - [ ] Read English documentation and error messages without translating
+- [ ] Remote and relocation readiness
+  - [ ] Practice async communication (clear written updates, MR descriptions)
+  - [ ] Learn provider-neutral cloud concepts (L3 section 22)
+  - [ ] Check whether international certification payment and exam delivery work for you before planning on CKA, LPIC or AWS certs
+- [ ] Job search
+  - [ ] Resume tailored per posting, listing tools you've used in a project
+  - [ ] Watch Jobinja, Quera, JobVision and IranTalent weekly for the stack your target companies use
+  - [ ] Avoid employers who ask for cracked software
