@@ -1,1 +1,1 @@
-# My Git practice
+Line from conflict-test branch
