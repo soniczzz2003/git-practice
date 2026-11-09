@@ -1,1 +1,1 @@
-Line from main branch and Line from conflict-test branch
+This is a new feature for the README.
