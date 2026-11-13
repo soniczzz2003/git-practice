@@ -46,32 +46,31 @@ Keep Sonic's 35 h lead-in (W1-W2). Approx section targets (pre-recalibration): L
 
 > Week 1 happens before the shared lab is ready, so use a local VM (for example VirtualBox with Ubuntu LTS) and move to the lab in week 2.
 
-- [ ] Terminal comfort (cd, ls, cat, less, cp, mv, rm, man, --help) [15h]. Done when: you complete 20 small file tasks in the VM with no graphical
       interface.
-- [ ] SSH and a text editor (nano first) [5h]. Done when: you log into the VM with an SSH key and edit a config file over SSH.
-- [ ] Programming logic: variables, conditionals, loops, functions [10h]. Use the official Python tutorial (docs.python.org). Done when: you write
+- [x] SSH and a text editor (nano first) [5h]. Done when: you log into the VM with an SSH key and edit a config file over SSH.
+- [x] Programming logic: variables, conditionals, loops, functions [10h]. Use the official Python tutorial (docs.python.org). Done when: you write
       FizzBuzz and a function that counts the words in a text file.
-- [ ] How computers and the internet work, at a high level [5h]. Done when: you can explain what a process, a file, an IP address and a DNS name are
+- [x] How computers and the internet work, at a high level [5h]. Done when: you can explain what a process, a file, an IP address and a DNS name are
       in your own words.
 
 ## 0. Join the Shared Lab [W2, 14h]
 
-- [ ] WireGuard access to the lab (Mava builds it). Done when: you can SSH into a lab VM from home.
-- [ ] Offline documentation (man pages, tldr, offline docsets). Done when: you can look up syntax with the internet off.
-- [ ] Use the shared mirrors. Done when: a lab VM installs a package and pulls an image through the mirrors only.
+- [x] WireGuard access to the lab (Mava builds it). Done when: you can SSH into a lab VM from home.
+- [x] Offline documentation (man pages, tldr, offline docsets). Done when: you can look up syntax with the internet off.
+- [x] Use the shared mirrors. Done when: a lab VM installs a package and pulls an image through the mirrors only.
 
 ## LEVEL 1 core
 
-- [ ] 1.  Git [W2-W3, 24h]
-  - [ ] Core commands (init, add, commit, push, pull). Done when: you can do a full cycle without notes.
-  - [ ] Branching, merging, conflict resolution. Done when: you resolve a real conflict in a teammate's repo.
-  - [ ] Rebase. Done when: you squash 5 commits with interactive rebase.
-  - [ ] Merge request / code review workflow (GitLab-style). Done when: you opened and reviewed an MR with comments.
-  - [ ] .gitignore & Markdown. Done when: your READMEs render cleanly.
-  - [ ] Project: team notes repo with protected main and MR-only changes.
-- [ ] 2.  Linux (LPIC roadmap) [W3-W6, 112h]
-  - [ ] Filesystem, permissions, ACLs, umask. Done when: you can fix permission problems without trial and error.
-  - [ ] Users, groups, sudo. Done when: you can create a restricted admin user from scratch.
+- [x] 1.  Git [W2-W3, 24h]
+  - [x] Core commands (init, add, commit, push, pull). Done when: you can do a full cycle without notes.
+  - [x] Branching, merging, conflict resolution. Done when: you resolve a real conflict in a teammate's repo.
+  - [x] Rebase. Done when: you squash 5 commits with interactive rebase.
+  - [x] Merge request / code review workflow (GitLab-style). Done when: you opened and reviewed an MR with comments.
+  - [x] .gitignore & Markdown. Done when: your READMEs render cleanly.
+  - [x] Project: team notes repo with protected main and MR-only changes.
+- [x] 2.  Linux (LPIC roadmap) [W3-W6, 112h]
+  - [x] Filesystem, permissions, ACLs, umask. Done when: you can fix permission problems without trial and error.
+  - [x] Users, groups, sudo. Done when: you can create a restricted admin user from scratch.
   - [ ] Processes & signals. Done when: you can find and stop a runaway process and explain load average.
   - [ ] Package management (apt) + local repos/mirrors. Done when: you built and used a local mirror.
   - [ ] systemd & services. Done when: you wrote a unit file with restart policy and read its journal.
